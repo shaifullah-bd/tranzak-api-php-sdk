@@ -1,0 +1,24 @@
+{
+    "name": "bdtask/tranzak",
+    "description": "Tranzak payment gateway api php sdk",
+    "type": "library",
+    "version" : "1.0.0",
+    "minimum-stability": "stable",
+    "license": "MIT",
+    "autoload": {
+        "psr-4": {
+            "Bdtask\\Tranzak\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "bdtask",
+            "email": "info@bdtask.com", 
+            "role": "Developer"
+        } 
+    ],
+    "homepage": "http://www.bdtask.com/",
+    "require": {
+        "guzzlehttp/guzzle": "^7.9"
+    }
+}
