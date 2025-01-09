@@ -33,6 +33,7 @@ class HttpClient
                 'query' => $params,
                 'headers' => $headers,
             ]);
+
             return json_decode($response->getBody()->getContents(), true);
         } catch (RequestException $e) {
             $errorMessage = $e->getResponse() ? $e->getResponse()->getBody()->getContents() : $e->getMessage();

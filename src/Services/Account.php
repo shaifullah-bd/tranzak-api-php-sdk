@@ -27,10 +27,13 @@ class Account
      */
     public function details(string $accountId): array
     {
-        $endpoint = "/xp021/v1/account/details?accountId={$accountId}";
+        $endpoint = "/xp021/v1/account/details";
         $headers = $this->requestHelper->getHeaders();
+        $params = [
+            "accountId"=> $accountId,
+        ];
 
-        return $this->httpClient->get($endpoint, [], $headers);
+        return $this->httpClient->get($endpoint, $params, $headers);
     }
 
     /**

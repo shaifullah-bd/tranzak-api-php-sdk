@@ -4,16 +4,22 @@ namespace Bdtask\Tranzak;
 
 use Bdtask\Tranzak\Auth\TokenManager;
 use Bdtask\Tranzak\Services\Account;
+use Bdtask\Tranzak\Services\Payment;
+use Bdtask\Tranzak\Services\Transfer;
 
 class Tranzak
 {
     private TokenManager $tokenManager;
     private Account $account;
+    private Payment $payment;
+    private Transfer $transfer;
 
     public function __construct(string $appId, string $appKey, string $baseUrl)
     {
         $this->tokenManager = new TokenManager($appId, $appKey, $baseUrl);
         $this->account = new Account($this->tokenManager);
+        $this->payment = new Payment($this->tokenManager);
+        $this->transfer = new Transfer($this->tokenManager);
     }
 
     /**
@@ -100,11 +106,111 @@ class Tranzak
     }
 
     /**
-     * Get sandbox account authorization code
+     * Get account authorization code
      * @return array
      */
     public function accountAuthorizationCode(): array
     {
         return $this->account->authorizationCode();
+    }
+
+    /**
+     * Create web redirect payment
+     * @param array $data
+     * @return array
+     */
+    public function createWebRedirectPayment(array $data): array
+    {
+        return $this->payment->createWebRedirectPayment($data);
+    }
+
+    /**
+     * Create Mobile Money Charge
+     * @param array $data
+     * @return array
+     */
+    public function createMobilePayment(array $data): array
+    {
+        return $this->payment->createMobilePayment($data);
+    }
+
+    /**
+     * Create Direct Charge via Tranzak QR Code (In-Store Payment)
+     * @param array $data
+     * @return array
+     */
+    public function createDirectPayment(array $data): array
+    {
+        return $this->payment->createDirectPayment($data);
+    }
+
+    /**
+     * Displays payment request details
+     * @param string $requestId
+     * @return array
+     */
+    public function requestDetails(string $requestId): array
+    {
+        return $this->payment->requestDetails($requestId);
+    }
+
+    /**
+     * Cancel payment request data
+     * @param string $requestId
+     * @return array
+     */
+    public function cancelPaymentRequest(string $requestId): array
+    {
+        return $this->payment->cancelPaymentRequest($requestId);
+    }
+
+    /**
+     * Refresh transaction status
+     * @param string $requestId
+     * @return array
+     */
+    public function refreshTransactionStatus(string $requestId): array
+    {
+        return $this->payment->refreshTransactionStatus($requestId);
+    }
+
+    /**
+     * Transfer to Tranzak Users
+     * @param array $data
+     * @return array
+     */
+    public function transferTranzakUser(array $data): array
+    {
+        return $this->transfer->transferTranzakUser($data);
+    }
+
+    /**
+     * Transfer To Mobile Money
+     * @param array $data
+     * @return array
+     */
+    public function transferMobileMoney(array $data): array
+    {
+        return $this->transfer->transferMobileMoney($data);
+    }
+
+    /**
+     * Transfer To CEMAC Bank Account
+     * @param array $data
+     * @return array
+     */
+    public function transferToBank(array $data): array
+    {
+        return $this->transfer->transferToBank($data);
+    }
+
+    /**
+     * Get request details by transferId ID
+     * @param string $transferId
+     * @return array
+     */
+    public function transferDetails(string $transferId): array
+    {
+        return $this->transfer->transferDetails($transferId);
     }
 }
